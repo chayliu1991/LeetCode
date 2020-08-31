@@ -10,6 +10,7 @@
   - 分隔链表
   - 复制带随机指针的链表
   - 奇偶链表
+  - 删除排序链表中的重复元素
 
 # [双指针](https://github.com/chayliu1991/LeetCode/tree/master/src/%E5%8F%8C%E6%8C%87%E9%92%88)
 
@@ -21,12 +22,14 @@
   - 盛最多水的容器
   - 合并两个有序数组
 
-- [快慢指针](https://github.com/chayliu1991/LeetCode/blob/master/src/%E5%8F%8C%E6%8C%87%E9%92%88/%E5%BF%AB%E6%85%A2%E6%8C%87%E6%8C%87%E9%92%88.md)
+- [快慢指针](https://github.com/chayliu1991/LeetCode/blob/master/src/%E5%8F%8C%E6%8C%87%E9%92%88/%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88.md)
   - 环形链表 II
   - 移除元素
   - 移动零
   - 删除排序数组中的重复项
   - 删除排序数组中的重复项 II
+  - 删除链表的倒数第N个节点
+  - 排序链表
 
 # [动态规划](https://github.com/chayliu1991/LeetCode/tree/master/src/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92)
 
