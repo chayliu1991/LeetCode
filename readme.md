@@ -9,7 +9,7 @@
   - 打家劫舍
   - 打家劫舍 II
   - 打家劫舍 III
-- [动态规划之3：股票问题]([https://github.com/chayliu1991/LeetCode/blob/master/src/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%B9%8B3%EF%BC%9A%E8%82%A1%E7%A5%A8%E9%97%AE%E9%A2%98.md](https://github.com/chayliu1991/LeetCode/blob/master/src/动态规划/动态规划之3：股票问题.md))
+- [动态规划之3：股票问题](https://github.com/chayliu1991/LeetCode/blob/master/src/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%B9%8B3%EF%BC%9A%E8%82%A1%E7%A5%A8%E9%97%AE%E9%A2%98.md)
   - 只买卖一次
   - 买卖无限次
   - 买卖两次
