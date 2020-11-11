@@ -48,7 +48,9 @@ public:
     int numIslands(vector<vector<char>>& grid) {
         if(grid.empty())
             return 0;
-        
+			
+		constexpr static int dx[4] = {0, 1, 0, -1};
+		constexpr static int dy[4] = {1, 0, -1, 0};        
         int m = grid.size(),n = grid[0].size();
         int res = 0;
 
@@ -67,27 +69,16 @@ public:
                         auto front = q.front();
                         q.pop();
                         int row = front.first,col = front.second;
-
-                        if(row-1 >= 0 && grid[row-1][col] == '1')
-                        {
-                            q.push({row-1,col});
-                            grid[row-1][col] = '0';
-                        }
-                        if(row+1 < m && grid[row+1][col] == '1')
-                        {
-                            q.push({row+1,col});
-                            grid[row+1][col] = '0';
-                        }
-                        if(col-1 >= 0 && grid[row][col-1] == '1')
-                        {
-                            q.push({row,col-1});
-                            grid[row][col-1] = '0';
-                        }
-                        if(col + 1 < n && grid[row][col+1] == '1')
-                        {
-                            q.push({row,col+1});
-                            grid[row][col+1] = '0';
-                        }
+						for(int k = 0;k < 4;k++)
+						{
+							int x = row + dx[k];
+							int y = col + dy[k];
+							if(x >=0 && x < m && y >=0 && y < n && grid[x][y] == '1')
+							{
+								q.push({x,y});
+								grid[x][y] = '0';
+							}
+						}
                     }
                 }             
             }
@@ -105,6 +96,9 @@ public:
     int maxAreaOfIsland(vector<vector<int>>& grid) {
         if(grid.empty())
             return 0;
+		
+		constexpr static int dx[4] = {0, 1, 0, -1};
+		constexpr static int dy[4] = {1, 0, -1, 0}; 		
         int m = grid.size(),n = grid[0].size();
         int res = INT_MIN;
 
@@ -124,74 +118,75 @@ public:
                     {
                         auto front = q.front();
                         q.pop();
-                        int row = front.first,col = front.second;
-
-                        if(row-1 >= 0 && grid[row-1][col] == 1)
-                        {
-                            q.push({row-1,col});
-                            grid[row-1][col] = 0;
-                            curr++;  
-                        }
-                        if(row+1 < m && grid[row+1][col] == 1)
-                        {
-                            q.push({row+1,col});
-                            grid[row+1][col] = 0;
-                            curr++;  
-                        }
-                        if(col-1 >= 0 && grid[row][col-1] == 1)
-                        {
-                            q.push({row,col-1});
-                            grid[row][col-1] = 0;
-                            curr++;  
-                        }
-                        if(col + 1 < n && grid[row][col+1] == 1)
-                        {
-                            q.push({row,col+1});
-                            grid[row][col+1] = 0;
-                            curr++;  
-                        }
+                        int row = front.first,col = front.second;						
+						for(int k =0;k < 4;k++)
+						{
+							int x = row + dx[k];
+							int y = col + dy[k];
+							if(x >=0 && x < m && y >=0 && y < n && grid[x][y] == 1)
+							{
+								q.push({x,y});
+								grid[x][y] = 0;
+								curr++;  
+							}
+						}                        
                     }  
                 }
                 res = max(res,curr);
             }
         }
-
         return res;
     }
 };
 ```
 
-# [463. 岛屿的周长](https://leetcode-cn.com/problems/island-perimeter/)
+# [542. 01 矩阵](https://leetcode-cn.com/problems/01-matrix/)
 
 ```
 class Solution {
-    constexpr static int dx[4] = {0, 1, 0, -1};
-    constexpr static int dy[4] = {1, 0, -1, 0};
 public:
-    int islandPerimeter(vector<vector<int>> &grid) {
-        int n = grid.size(), m = grid[0].size();
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < m; ++j) {
-                if (grid[i][j]) {
-                    int cnt = 0;
-                    for (int k = 0; k < 4; ++k) {
-                        int tx = i + dx[k];
-                        int ty = j + dy[k];
-                        if (tx < 0 || tx >= n || ty < 0 || ty >= m || !grid[tx][ty]) {
-                            cnt += 1;
-                        }
-                    }
-                    ans += cnt;
+    vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) {
+        if(matrix.empty() || matrix[0].empty())
+            return {};
+        
+        constexpr int dx[4] = {1,0,-1,0};
+        constexpr int dy[4] = {0,1,0,-1};
+        int m = matrix.size(),n = matrix[0].size();
+        vector<vector<int>> res(m,vector<int>(n,0)),visited(m,vector<int>(n,0));
+        queue<pair<int,int>> q;
+        for(int i = 0;i < m;i++)
+        {
+            for(int j = 0;j < n;j++)
+            {
+                if(matrix[i][j] == 0)
+                {
+                    q.emplace(i,j);
+                    visited[i][j] = 1;
                 }
             }
         }
-        return ans;
+
+        while(!q.empty())
+        {
+            auto it= q.front();
+            q.pop();
+            int row = it.first,col = it.second;
+            for(int k = 0;k < 4;k++)
+            {
+                int x = row + dx[k];
+                int y = col + dy[k];
+                if(x >= 0 && x < m && y >= 0 && y < n && !visited[x][y])
+                {
+                    res[x][y] = res[row][col] + 1;
+                    q.emplace(x,y);
+                    visited[x][y] = 1;
+                }
+            }
+        }
+        return res;
     }
 };
 ```
-
-# [542. 01 矩阵](https://leetcode-cn.com/problems/01-matrix/)
 
 
 
