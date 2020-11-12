@@ -10,7 +10,7 @@
 
 在实现上DFS一般使用递归或栈来实现。
 
-基本模板：
+模板：
 
 ```
  set visited;
@@ -231,6 +231,46 @@ public:
             dfs(matrix, visited, matrix[i][j], i + d[0], j + d[1]);
     }	
 };
+```
+
+# [463. 岛屿的周长](https://leetcode-cn.com/problems/island-perimeter/)
+
+```
+class Solution {
+public:
+	int dfs(vector<vector<int>>& grid,int i,int j)
+	{
+		//@ 从陆地到海洋或者从陆地到边界，周长+1
+		if(i < 0 || j <0 || i >= grid.size() || j >= grid[0].size() || grid[i][j] == 0)
+			return 1;
+		if (grid[i][j] == 2)
+			return 0;
+		grid[i][j] = 2; //@ 标记为已读
+		int res = 0;
+		
+		vector<vector<int>> dir{{0,1},{0,-1},{1,0},{-1,0}};
+		for(const auto d :dir)
+			res += dfs(grid,i+d[0],j+d[1]);
+		return res;
+	}
+	
+    int islandPerimeter(vector<vector<int>>& grid) {
+		if(grid.empty())
+			return 0;
+		
+		int res  = 0;
+		for(int i = 0;i < grid.size();i++)
+		{
+			for(int j = 0;j < grid[0].size();j++)
+			{
+				if(grid[i][j] == 1)
+					res += dfs(grid,i,j);
+			}
+		}
+		return res;
+    }
+};
+
 ```
 
 
