@@ -1,8 +1,31 @@
 # 概述
 
-- 深度优先搜索算法（Depth-First-Search，简称DFS）是一种用于遍历或搜索树或图的算法。
-- 思想：一直往深处走，直到找到解或者走不下去后回溯。
-- DFS和BFS的区别： 深搜和广搜在实现上分别用的是栈（栈和函数递归本质是一样）和队列。
+深度优先搜索（DFS）类似于树的先序遍历。在搜索时会尽可能的沿着一条所有路径进行搜索，直到该条路径上所有节点搜索完成，然后切换到另一条路径上进行搜索，直到图的所有节点全部都被遍历。
+
+深度优先搜索整个过程可以分成如下步骤：
+
+- 判断终止条件
+- 对节点进行访问并加入到访问集合中
+- 以当前节点的邻接结点为起点，通过递归向更深层次进行搜索
+
+在实现上DFS一般使用递归或栈来实现。
+
+基本模板：
+
+```
+ set visited;
+ void DFS(start) {     
+     if(shoud be end) //@ 结束条件
+         return;     
+     visited.add(start);
+     //@ 递归向更深次进行遍历
+     for(Node n:start.adjs) 
+     {
+         if(n is not visited)
+             DFS(n);   
+     }
+ }
+```
 
 # [17. 电话号码的字母组合](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/)
 
@@ -108,6 +131,52 @@ public:
         vector<vector<int>> dir{{1,0},{-1,0},{0,1},{0,-1}};
         for(const auto d : dir)
             dfs(grid,i+d[0],j+d[1]);
+    }
+};
+```
+
+# [130. 被围绕的区域](https://leetcode-cn.com/problems/surrounded-regions/)
+
+```
+class Solution {
+public:
+	void dfs(vector<vector<char>>& board,int i,int j)
+	{
+		if(i < 0 || j < 0 || i >= board.size() || j >= board[0].size() || board[i][j] != 'O')
+			return;	
+		
+		board[i][j] = 'A';
+		vector<vector<int>> dir{{1,0},{-1,0},{0,1},{0,-1}};
+		for(const auto d : dir)
+			dfs(board,i+d[0],j+d[1]);		
+	}
+
+    void solve(vector<vector<char>>& board) {
+        if(board.empty())
+			return;
+		int m = board.size(),n = board[0].size();
+		for(int i = 0;i < m;i++)
+		{
+			dfs(board,i,0);
+			dfs(board,i,n-1);
+		}
+		
+		for(int i = 1;i < n -1;i++)
+		{
+			dfs(board,0,i);
+			dfs(board,m-1,i);
+		}
+		
+		for(int i = 0;i < m;i++)
+		{
+			for(int j = 0;j < n;j++)
+			{
+				if(board[i][j] == 'A')
+					board[i][j] = 'O';
+				else if(board[i][j] == 'O')
+					board[i][j] = 'X';
+			}
+		}		
     }
 };
 ```
