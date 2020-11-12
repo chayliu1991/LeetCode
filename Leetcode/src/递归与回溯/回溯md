@@ -1,0 +1,44 @@
+
+
+# [332. 重新安排行程](https://leetcode-cn.com/problems/reconstruct-itinerary/)
+
+```
+class Solution {
+public:
+	//@ unordered_map<src city, map<dst city, # of tickets>> targets;
+    unordered_map<string, map<string, int>> targets;
+    bool backtrack(int ticketNum, vector<string>& res) {
+        if (res.size() == ticketNum + 1)
+            return true;
+        else if (targets[res.back()].empty())
+           return false; // tickets not used up, but entered dead end 
+        
+        
+        for (auto& target : targets[res.back()]) {
+            if (target.second > 0) {
+                res.push_back(target.first);
+                target.second--;
+                if (backtrack(ticketNum, res)) {
+                    return true;
+                }
+                res.pop_back();
+                target.second++;
+            }
+        }
+
+        return false;
+    }
+	
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        vector<string> res;
+        for (const auto&  t : tickets) 
+            targets[t[0]][t[1]]++;
+
+        res.push_back("JFK"); // start city
+        backtrack(tickets.size(), res);
+        return res;
+    }
+};
+
+```
+
