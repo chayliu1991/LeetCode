@@ -181,17 +181,57 @@ public:
 };
 ```
 
-# [547. 朋友圈](https://link.zhihu.com/?target=https%3A//leetcode-cn.com/problems/friend-circles/)
-
-
-
-# [130. 被围绕的区域](https://link.zhihu.com/?target=https%3A//leetcode-cn.com/problems/surrounded-regions/)
-
-
-
-
-
 # [417. 太平洋大西洋水流问题](https://link.zhihu.com/?target=https%3A//leetcode-cn.com/problems/pacific-atlantic-water-flow/)
+
+```
+class Solution {
+public:
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& matrix)
+    {
+        if (matrix.empty() || matrix[0].empty())
+            return{};
+
+        int m = matrix.size(), n = matrix[0].size();
+        vector<vector<bool>> pacific(m, vector<bool>(n, false));
+        vector<vector<bool>> atlantic(m, vector<bool>(n, false));
+
+        vector<vector<int>> res;
+        for (int i = 0; i < m; i++)
+        {
+            dfs(matrix, pacific, INT_MIN, i, 0);
+            dfs(matrix, atlantic, INT_MIN, i, n - 1);
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+            dfs(matrix, pacific, INT_MIN, 0, i);
+            dfs(matrix, atlantic, INT_MIN, m - 1, i);
+        }
+
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (pacific[i][j] && atlantic[i][j])
+                    res.push_back({ i,j });
+            }
+        }
+        return res;
+    }
+
+    void dfs(vector<vector<int>>& matrix, vector<vector<bool>>& visited, int pre, int i, int j)
+    {
+        if (i < 0 || j < 0 || i >= matrix.size() || j >= matrix[0].size() || visited[i][j] || matrix[i][j] < pre)
+            return;
+
+        visited[i][j] = true;
+
+        vector<vector<int>> dir{ { 1,0 },{ -1,0 },{ 0,1 },{ 0,-1 } };
+        for (const auto d : dir)
+            dfs(matrix, visited, matrix[i][j], i + d[0], j + d[1]);
+    }	
+};
+```
 
 
 
